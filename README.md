@@ -1,4 +1,4 @@
-# Matrix and Word
+# Matrix and Word [![Build Status](https://travis-ci.org/vztot/jv-matrix-and-word.svg?branch=master)](https://travis-ci.org/vztot/jv-matrix-and-word)
 
 Your program should get two parameters from command line:
 
