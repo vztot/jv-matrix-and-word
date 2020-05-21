@@ -9,7 +9,8 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class ConsoleHandler {
-    private static final String errorMessage = "Error: String is not valid! Please enter valid string.";
+    private static final String errorMessage =
+            "Error: String is not valid! Please enter valid string.";
     private Scanner scanner;
     private String matrixString;
     private String word;
@@ -147,19 +148,23 @@ public class ConsoleHandler {
     private List<Cell> getAdjacentCellsWithValueOf(Cell cell, char c) {
         List<Cell> result = new ArrayList<>();
         if (matrix.length > 0) {
-            if (cell.i > 0) {
-                result.add(new Cell(cell.i - 1, cell.j, matrix[cell.i - 1][cell.j]));
+            if (cell.cordI > 0) {
+                result.add(new Cell(cell.cordI - 1, cell.cordJ,
+                        matrix[cell.cordI - 1][cell.cordJ]));
             }
-            if (cell.i != matrix.length - 1) {
-                result.add(new Cell(cell.i + 1, cell.j, matrix[cell.i + 1][cell.j]));
+            if (cell.cordI != matrix.length - 1) {
+                result.add(new Cell(cell.cordI + 1, cell.cordJ,
+                        matrix[cell.cordI + 1][cell.cordJ]));
             }
         }
         if (matrix[0].length > 0) {
-            if (cell.j > 0) {
-                result.add(new Cell(cell.i, cell.j - 1, matrix[cell.i][cell.j - 1]));
+            if (cell.cordJ > 0) {
+                result.add(new Cell(cell.cordI, cell.cordJ - 1,
+                        matrix[cell.cordI][cell.cordJ - 1]));
             }
-            if (cell.j != matrix[0].length - 1) {
-                result.add(new Cell(cell.i, cell.j + 1, matrix[cell.i][cell.j + 1]));
+            if (cell.cordJ != matrix[0].length - 1) {
+                result.add(new Cell(cell.cordI, cell.cordJ + 1,
+                        matrix[cell.cordI][cell.cordJ + 1]));
             }
         }
         return result.stream()
@@ -168,19 +173,19 @@ public class ConsoleHandler {
     }
 
     private class Cell {
-        private int i;
-        private int j;
+        private int cordI;
+        private int cordJ;
         private char value;
 
         public Cell(int i, int j, char value) {
-            this.i = i;
-            this.j = j;
+            this.cordI = i;
+            this.cordJ = j;
             this.value = value;
         }
 
         @Override
         public String toString() {
-            return value + "[" + i + "," + j + "]";
+            return value + "[" + cordI + "," + cordJ + "]";
         }
     }
 }
