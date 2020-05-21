@@ -4,14 +4,13 @@ import com.vztot.service.PathFinder;
 import java.util.Scanner;
 
 public class ConsoleHandler {
-    private Scanner scanner;
 
     public ConsoleHandler() {
-        scanner = new Scanner(System.in);
         handle();
     }
 
     public void handle() {
+        Scanner scanner = new Scanner(System.in);
         char[][] matrix = null;
         String word = null;
         while (true) {
