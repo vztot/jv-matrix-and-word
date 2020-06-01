@@ -8,15 +8,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PathFinder {
-    private char[][] matrix;
-    private String word;
 
-    public PathFinder(char[][] matrix, String word) {
-        this.matrix = matrix;
-        this.word = word;
-    }
-
-    public void drawMatrix() {
+    public void drawMatrix(char[][] matrix) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < matrix.length; i++) {
             sb.append(Arrays.toString(matrix[i]));
@@ -27,11 +20,12 @@ public class PathFinder {
         System.out.println(sb.toString());
     }
 
-    private void recursiveSearch(Deque<Cell> path, int depth) {
+    private void recursiveSearch(Deque<Cell> path, int depth, String word, char[][] matrix) {
         if (path.size() == word.length()) {
             return;
         }
-        List<Cell> possibleWays = getAdjacentCellsWithValueOf(path.peek(), word.charAt(depth + 1));
+        List<Cell> possibleWays = getAdjacentCellsWithValueOf(path.peek(),
+                word.charAt(depth + 1), matrix);
         if (possibleWays.size() == 0) {
             path.poll();
             depth--;
@@ -39,19 +33,19 @@ public class PathFinder {
         depth++;
         for (Cell possibleWay : possibleWays) {
             path.push(possibleWay);
-            recursiveSearch(path, depth);
+            recursiveSearch(path, depth, word, matrix);
             if (path.size() == word.length()) {
                 return;
             }
         }
     }
 
-    public String findPath() {
+    public String findPath(char[][] matrix, String word) {
         Deque<Cell> path = new ArrayDeque<>();
-        for (Cell root : findRootCell(word.charAt(0))) {
+        for (Cell root : findRootCell(word.charAt(0), matrix)) {
             path.clear();
             path.push(root);
-            recursiveSearch(path, 0);
+            recursiveSearch(path, 0, word, matrix);
             if (path.size() == word.length()) {
                 break;
             }
@@ -74,7 +68,7 @@ public class PathFinder {
         return "Solution not found.";
     }
 
-    private List<Cell> findRootCell(char c) {
+    private List<Cell> findRootCell(char c, char[][] matrix) {
         List<Cell> list = new ArrayList<>();
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
@@ -86,7 +80,7 @@ public class PathFinder {
         return list;
     }
 
-    private List<Cell> getAdjacentCellsWithValueOf(Cell cell, char c) {
+    private List<Cell> getAdjacentCellsWithValueOf(Cell cell, char c, char[][] matrix) {
         List<Cell> result = new ArrayList<>();
         if (matrix.length > 0) {
             if (cell.cordI > 0) {

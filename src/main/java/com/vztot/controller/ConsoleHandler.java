@@ -18,24 +18,24 @@ public class ConsoleHandler {
                 String inputLine = scanner.nextLine();
 
                 if (matrix == null) {
-                    matrix = buildMatrixFromString(inputLine);
-                } else if (word == null) {
-                    word = validateAndGetWord(inputLine, matrix.length);
+                    matrix = getMatrix(inputLine);
+                } else {
+                    word = getWord(inputLine, matrix.length);
                 }
 
-                if (matrix != null && word != null) {
-                    PathFinder nautilus = new PathFinder(matrix, word);
+                if (word != null) {
+                    PathFinder pathFinder = new PathFinder();
                     System.out.println("Matrix:");
-                    nautilus.drawMatrix();
+                    pathFinder.drawMatrix(matrix);
                     System.out.println("\nResult:");
-                    System.out.println(nautilus.findPath());
+                    System.out.println(pathFinder.findPath(matrix, word));
                     System.exit(0);
                 }
             }
         }
     }
 
-    private char[][] buildMatrixFromString(String matrixString) {
+    private char[][] getMatrix(String matrixString) {
         int len = matrixString.length();
         if (len > 0 && Math.sqrt(len) % 1 == 0) {
             int size = (int) Math.sqrt(matrixString.length());
@@ -50,7 +50,7 @@ public class ConsoleHandler {
         throw new RuntimeException("Entered string for matrix is not valid.");
     }
 
-    private String validateAndGetWord(String wordString, int countMatrixElements) {
+    private String getWord(String wordString, int countMatrixElements) {
         if (wordString.length() > 0 && wordString.length() <= Math.pow(countMatrixElements, 2)) {
             return wordString;
         }
